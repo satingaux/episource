@@ -12,7 +12,7 @@ jobs:
       
       - uses: oprypin/find-latest-tag@v1
         with:
-          repository: octokit/rest.js  # The repository to scan.
+          repository: satingaux/episource  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
         id: octokit  # The step ID to refer to later.
 
