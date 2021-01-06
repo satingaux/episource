@@ -21,10 +21,11 @@ jobs:
         with:
           path: ./version.ini
         env:
-          current_version: "${{ steps.package.outputs.content }}"
-          last_version:  "$GITHUB_REF"  #0.0 default if statement
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}  
+          current_version: ${{ steps.package.outputs.content }}
+          last_version:  $GITHUB_REF  #0.0 default if statement
       - name: current_version from version.ini file
-        run: echo "${{ env.current_version }} & ${{ env.last_version }} & $GITHUB_REF & ${{ steps.package.outputs.content }}"
+        run: echo " $RELEASE_VERSION & $current_version & $last_version & $GITHUB_REF & ${{ steps.package.outputs.content }}"
         
         
         
