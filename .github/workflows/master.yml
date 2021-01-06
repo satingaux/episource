@@ -1,13 +1,7 @@
-
-
 name: Create Release
-
 on:
   push:
     branches: [ main ]
-#   push:
-#     branches: [ master ]
-
 jobs:
   build:
     name: Create Release
@@ -16,21 +10,24 @@ jobs:
       - name: Checkout master or main
         uses: actions/checkout@v2 # actions/checkout@main
       
-      - name: 'Get last version tag'
-        id: lastversion
-        uses: "WyriHaximus/github-action-get-previous-tag@master"
-      
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository: octokit/rest.js  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+        id: octokit  # The step ID to refer to later.
+
+      - run: echo "Octokit is at version ${{ steps.octokit.outputs.tag }}"
+
       - name: Read current_version from version.ini file
         id: version_package
         uses: juliangruber/read-file-action@v1
         with:
           path: ./version.ini
-        env: 
+        env:
           current_version: ${{ steps.version_package.outputs.content }}
           last_version:  ${{ steps.vars.outputs.tag }}  #0.0 default if statement
       - name: current_version from version.ini file
         run: |
-          echo ${{ steps.lastversion.outputs.tag }}
           echo "${{ steps.version_package.outputs.content }}"
           
 #       - name: is last version exists
