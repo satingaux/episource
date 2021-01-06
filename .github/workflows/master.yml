@@ -22,13 +22,13 @@ jobs:
         with:
           path: ./version.ini
         env:
-          current_version: ${{ steps.currentVersion.outputs.content }}
-          last_version:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
+          CURRENT_VERSION: ${{ steps.currentVersion.outputs.content }}
+          LAST_VERSION:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
       - run: |
           echo "last version ${{ steps.lastVersion.outputs.tag }}"
           echo "current version ${{ steps.currentVersion.outputs.content }}"
-          echo "last version $current_version"
-          echo "current version $last_version"
+          echo "last version $LAST_VERSION"
+          echo "current version $CURRENT_VERSION"
           
 #       - name: is last version exists
 #         id: is_last_version_null
