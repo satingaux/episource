@@ -36,8 +36,5 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            run: |
-              echo release body first line,
-              echo test, and deploy your project.
           draft: false
           prerelease: false  
