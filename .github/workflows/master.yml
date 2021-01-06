@@ -4,7 +4,7 @@ name: Create Release
 
 on:
   push:
-    branches: master
+#     branches: master
 #   push:
 #     branches: [ master ]
 
