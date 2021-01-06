@@ -43,7 +43,7 @@ jobs:
         if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
         run: |
           echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
-          exit 1        
+          exit 0   
           
       - run: |
           echo "last version $LAST_VERSION"
