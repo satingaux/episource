@@ -28,18 +28,18 @@ jobs:
           echo $current_version 
           echo "$last_version & $GITHUB_REF & ${{ steps.version_package.outputs.content }}"
           
-      - name: is last version exists
-        id: is_last_version_null
-        if: ${{ steps.version_package.outputs.content }} == null
-        run: $last_version = 0.0
-        continue-on-error: true
+#       - name: is last version exists
+#         id: is_last_version_null
+#         if: ${{ steps.version_package.outputs.content }} == null
+#         run: $last_version = 0.0
+#         continue-on-error: true
 
-      - name: compare new and old version
-        id: compare_versions
-        if: $current_version == $last_version
-        run: |
-          echo "Current Version is equal to last version, So no version update and no release as well"
-          exit 1
+#       - name: compare new and old version
+#         id: compare_versions
+#         if: $current_version == $last_version
+#         run: |
+#           echo "Current Version is equal to last version, So no version update and no release as well"
+#           exit 1
 
         
         
