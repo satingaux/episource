@@ -24,9 +24,9 @@ jobs:
           current_version: ${{ steps.package.outputs.content }}
           last_version: 0.0
       - name: current_version from version.ini file
-        run: echo ${{ env.current_version }}
+        run: echo "version.ini = ${{ steps.package.outputs.content }}"
       - name: Show GitHub ref
-        run: echo "$GITHUB_REF"
+        run: echo "GITHUB_REF = $GITHUB_REF"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
