@@ -15,6 +15,11 @@ jobs:
     steps:
       - name: Checkout master or main
         uses: actions/checkout@v2 # actions/checkout@main
+      
+      - name: 'Get last version tag'
+        id: lastversion
+        uses: "WyriHaximus/github-action-get-previous-tag@master"
+      
       - name: Read current_version from version.ini file
         id: version_package
         uses: juliangruber/read-file-action@v1
@@ -25,8 +30,8 @@ jobs:
           last_version:  ${{ steps.vars.outputs.tag }}  #0.0 default if statement
       - name: current_version from version.ini file
         run: |
-          echo $current_version 
-          echo "${{ steps.version_package.outputs.content }} & ${{ steps.vars.outputs.tag }} "
+          echo ${{ steps.lastversion.outputs.tag }}
+          echo "${{ steps.version_package.outputs.content }}"
           
 #       - name: is last version exists
 #         id: is_last_version_null
