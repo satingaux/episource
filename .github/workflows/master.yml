@@ -9,6 +9,15 @@ jobs:
     steps:
       - name: Checkout master or main
         uses: actions/checkout@v2 # actions/checkout@main
+      
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository: satingaux/episource  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+        id: octokit  # The step ID to refer to later.
+
+      - run: echo "Octokit is at version ${{ steps.octokit.outputs.tag }}"
+
 
       - name: Set output
         id: vars
