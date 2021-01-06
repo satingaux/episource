@@ -40,7 +40,7 @@ jobs:
 
       - name: compare current and last version
         id: compareVersions
-        if: steps.lastVersion.outputs.tag - steps.currentVersion.outputs.content == 0
+        if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
         run: |
           echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
           exit 1        
@@ -56,7 +56,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ steps.currentVersion.outputs.content }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ steps.currentVersion.outputs.content }}
           body: |
             Changes in this Release2
             - First Change
