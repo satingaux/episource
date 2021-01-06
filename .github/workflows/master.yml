@@ -27,6 +27,8 @@ jobs:
       - run: |
           echo "last version ${{ steps.lastVersion.outputs.tag }}"
           echo "current version ${{ steps.currentVersion.outputs.content }}"
+          echo "last version $current_version"
+          echo "current version $last_version"
           
 #       - name: is last version exists
 #         id: is_last_version_null
