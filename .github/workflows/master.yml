@@ -35,7 +35,7 @@ jobs:
         continue-on-error: true
 
       - name: compare new and old version
-        id: $compare_versions
+        id: compare_versions
         if: $current_version == $last_version
         run: |
           echo "Current Version is equal to last version, So no version update and no release as well"
