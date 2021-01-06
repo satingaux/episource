@@ -32,8 +32,8 @@ jobs:
           
       - name: is last version exists
         id: isLastVersionNull
-        if: ${{ steps.lastVersion.outputs.tag }} == null
-        run: $last_version = 0.0
+        if: ${{ steps.lastVersion.outputs.tag }} == ${{ null }}
+        run: $last_version = ${{ 0.0 }}
         continue-on-error: true
 
 #       - name: compare new and old version
