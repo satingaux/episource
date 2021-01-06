@@ -4,7 +4,7 @@ name: Create Release
 
 on:
   push:
-#     branches: master
+    branches: [ main ]
 #   push:
 #     branches: [ master ]
 
@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v2 # actions/checkout@main
+      - name: Get current directory
+        id: pwd
+        run: echo "::set-output name=pwd::$(pwd)"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
