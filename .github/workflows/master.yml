@@ -46,7 +46,7 @@ jobs:
           exit 0   
           
       - run: |
-          echo "last version $LAST_VERSION"
+          echo $LAST_VERSION
           echo "current version $CURRENT_VERSION"
         
       - name: Create Release
