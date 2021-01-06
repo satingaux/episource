@@ -26,7 +26,7 @@ jobs:
       - name: current_version from version.ini file
         run: |
           echo $current_version 
-          echo "$last_version & $GITHUB_REF & ${{ steps.version_package.outputs.content }}"
+          echo "${{ steps.version_package.outputs.content }} & ${{ steps.vars.outputs.tag }} "
           
 #       - name: is last version exists
 #         id: is_last_version_null
