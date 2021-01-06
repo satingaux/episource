@@ -25,8 +25,8 @@ jobs:
           current_version: ${{ steps.currentVersion.outputs.content }}
           last_version:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
       - run: |
-          echo "last version ${{ steps.lastVersion.outputs.content }}"
-          echo "current version ${{ steps.currentVersion.outputs.tag }}"
+          echo "last version ${{ steps.lastVersion.outputs.tag }}"
+          echo "current version ${{ steps.currentVersion.outputs.content }}"
           
 #       - name: is last version exists
 #         id: is_last_version_null
