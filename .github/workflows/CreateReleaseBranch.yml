@@ -1,79 +1,108 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Create Release Branch
+name: Create Release
 
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      versionName:
-        description: 'Name of version  (ie 5.5.0)'
-        required: true
-      versionCode:
-        description: 'Version number (50500)'
-        required: true
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+#     inputs:
+#       versionName:
+#         description: 'Name of version  (ie 5.5.0)'
+#         required: true
+#       versionCode:
+#         description: 'Version number (50500)'
+#         required: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  createrelease:
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   job_id:
+     
+#   createrelease:
+#     runs-on: ubuntu-latest
     
-    steps:
-    – name: Check out code
-      uses: actions/checkout@v2
-    – name: Create release branch
-      run: git checkout -b release/v${{ github.event.inputs.versionName }}
-    – name: Initialize mandatory git config
-      run: |
-       git config user.name "satingaux"
-       git config user.email satingaux@gmail.com
-    – name: Change version number and name
-      run: printf 'ext.version_code = ${{ github.event.inputs.versionCode }}\next.version_name = "${{ github.event.inputs.versionName }}"\n' > app_versions.gradle
-    – name: Update Changelog
-      uses: thomaseizinger/keep-a-changelog-new-release@v1
-      with:
-        version: ${{ github.event.inputs.versionName }}
-    – name: Commit changelog and manifest files
-      id: make-commit
-      run: |
-        git add app_versions.gradle
-        git add CHANGELOG.md
-        git commit –message "Prepare release ${{ github.event.inputs.versionName }}"
-        echo "::set-output name=commit::$(git rev-parse HEAD)"
-    – name: Push new branch
-      run: git push origin release/v${{ github.event.inputs.versionName }}
-    – name: Create pull request into main
-      uses: thomaseizinger/create-pull-request@1.0.0
-      with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       head: release/v${{ github.event.inputs.versionName }}
-       base: main
-       title: v${{ github.event.inputs.versionName }} into main
-       reviewers: ${{ github.event.issue.user.login }}
-       body: |
-           Hi!
-           This PR was created in response workflow running.
-           I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.
-    – name: Create pull request to develop
-      uses: thomaseizinger/create-pull-request@1.0.0
-      with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          head: release/v${{ github.event.inputs.versionName }}
-          base: develop
-          title: v${{ github.event.inputs.versionName }} into develop
-          reviewers: ${{ github.event.issue.user.login }}
-          body: |
-              Hi!
-              This PR was created in response workflow running.
-              I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.
+#     steps:
+#     – name: Check out code
+#       uses: actions/checkout@v2
+#     – name: Create release branch
+#       run: git checkout -b release/v${{ github.event.inputs.versionName }}
+#     – name: Initialize mandatory git config
+#       run: |
+#        git config user.name "satingaux"
+#        git config user.email satingaux@gmail.com
+#     – name: Change version number and name
+#       run: printf 'ext.version_code = ${{ github.event.inputs.versionCode }}\next.version_name = "${{ github.event.inputs.versionName }}"\n' > app_versions.gradle
+#     – name: Update Changelog
+#       uses: thomaseizinger/keep-a-changelog-new-release@v1
+#       with:
+#         version: ${{ github.event.inputs.versionName }}
+#     – name: Commit changelog and manifest files
+#       id: make-commit
+#       run: |
+#         git add app_versions.gradle
+#         git add CHANGELOG.md
+#         git commit –message "Prepare release ${{ github.event.inputs.versionName }}"
+#         echo "::set-output name=commit::$(git rev-parse HEAD)"
+#     – name: Push new branch
+#       run: git push origin release/v${{ github.event.inputs.versionName }}
+#     – name: Create pull request into main
+#       uses: thomaseizinger/create-pull-request@1.0.0
+#       with:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        head: release/v${{ github.event.inputs.versionName }}
+#        base: main
+#        title: v${{ github.event.inputs.versionName }} into main
+#        reviewers: ${{ github.event.issue.user.login }}
+#        body: |
+#            Hi!
+#            This PR was created in response workflow running.
+#            I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.
+#     – name: Create pull request to develop
+#       uses: thomaseizinger/create-pull-request@1.0.0
+#       with:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           head: release/v${{ github.event.inputs.versionName }}
+#           base: develop
+#           title: v${{ github.event.inputs.versionName }} into develop
+#           reviewers: ${{ github.event.issue.user.login }}
+#           body: |
+#               Hi!
+#               This PR was created in response workflow running.
+#               I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.
 
   # This workflow contains a single job called "build"
 #   build:
