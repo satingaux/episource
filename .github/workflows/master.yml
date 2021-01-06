@@ -30,11 +30,11 @@ jobs:
           echo "last version $LAST_VERSION"
           echo "current version $CURRENT_VERSION"
           
-#       - name: is last version exists
-#         id: is_last_version_null
-#         if: ${{ steps.version_package.outputs.content }} == null
-#         run: $last_version = 0.0
-#         continue-on-error: true
+      - name: is last version exists
+        id: isLastVersionNull
+        if: ${{ steps.lastVersion.outputs.tag }} == null
+        run: $last_version = 0.0
+        continue-on-error: true
 
 #       - name: compare new and old version
 #         id: compare_versions
