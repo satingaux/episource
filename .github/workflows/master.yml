@@ -21,8 +21,8 @@ jobs:
         with:
           path: ./version.ini
         env:
-          current_version: steps.package.outputs.content
-          last_version:  $GITHUB_REF  #0.0 default if statement
+          current_version: "${{ steps.package.outputs.content }}"
+          last_version:  "${{ GITHUB_REF }}"  #0.0 default if statement
       - name: current_version from version.ini file
         run: echo "current_version = ${{ env.current_version }} & last_version = ${{ env.last_version }}"
         
