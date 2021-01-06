@@ -32,7 +32,7 @@ jobs:
           
       - name: is last version exists
         id: isLastVersionNull
-        if: steps.lastVersion.outputs.tag == Null
+        if: steps.lastVersion.outputs.tag == null
         run: $LAST_VERSION = ${{ 0.0 }}
         continue-on-error: true
 
