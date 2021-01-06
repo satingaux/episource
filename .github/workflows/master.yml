@@ -26,12 +26,12 @@ jobs:
       - name: current_version from version.ini file
         run: |
           echo $current_version 
-          echo "& $last_version & $GITHUB_REF & ${{ steps.version_package.outputs.content }}"
+          echo "$last_version & $GITHUB_REF & ${{ steps.version_package.outputs.content }}"
           
       - name: is last version exists
         id: is_last_version_null
-        if: last_version == null
-        run: last_version = 0.0
+        if: $last_version == null
+        run: $last_version = 0.0
         continue-on-error: true
 
       - name: compare new and old version
