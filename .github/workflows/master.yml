@@ -33,7 +33,9 @@ jobs:
       - name: is last version exists
         id: isLastVersionNull
         if: steps.lastVersion.outputs.tag == null
-        run: $LAST_VERSION = ${{ 0.0 }}
+        run: |
+          run $LAST_VERSION = ${{ 0.0 }}
+          echo "Last version does not exists so, DEFAULT LAST_VERSION = $LAST_VERSION"
         continue-on-error: true
 
 #       - name: compare new and old version
