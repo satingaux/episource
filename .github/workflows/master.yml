@@ -10,6 +10,16 @@ jobs:
       - name: Checkout master or main
         uses: actions/checkout@v2 # actions/checkout@main
 
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+        
       - name: Read current_version from version.ini file
         id: version_package
         uses: juliangruber/read-file-action@v1
