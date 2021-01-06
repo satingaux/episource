@@ -14,21 +14,8 @@ jobs:
         with:
           repository: satingaux/episource  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
-        id: octokit  # The step ID to refer to later.
+        id: currentVersion  # The step ID to refer to later.
 
-      - run: echo "Octokit is at version ${{ steps.octokit.outputs.tag }}"
-
-
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
-        
       - name: Read current_version from version.ini file
         id: version_package
         uses: juliangruber/read-file-action@v1
@@ -39,8 +26,8 @@ jobs:
           last_version:  ${{ steps.vars.outputs.tag }}  #0.0 default if statement
       - name: current_version from version.ini file
         run: |
-          echo "${{ steps.version_package.outputs.content }}"
-          echo "$GITHUB_REF"
+          echo ";ast version ${{ steps.version_package.outputs.content }}"
+          echo "current version ${{ steps.currentVersion.outputs.tag }}"
           
 #       - name: is last version exists
 #         id: is_last_version_null
