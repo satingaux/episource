@@ -34,16 +34,20 @@ jobs:
         id: isLastVersionNull
         if: steps.lastVersion.outputs.tag == null
         run: |
-          run $LAST_VERSION = ${{ 0.0 }}
-          echo "Last version does not exists so, DEFAULT LAST_VERSION = $LAST_VERSION"
+          run $LAST_VERSION = 0.0
+          echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0"
         continue-on-error: true
 
       - name: compare current and last version
         id: compareVersions
-        if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
+        if: steps.lastVersion.outputs.tag == steps.currentVersion.outputs.content
         run: |
           echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
           exit 1        
+          
+      - run: |
+          echo "last version $LAST_VERSION"
+          echo "current version $CURRENT_VERSION"
         
       - name: Create Release
         id: create_release
