@@ -1,0 +1,32 @@
+name: Release log
+# Based on https://github.com/actions/starter-workflows/blob/master/ci/go.yml
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-and-release:
+    name: Publish release if a new version is in the current branch.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HEAD.
+        uses: actions/checkout@v2
+
+      - run: npm install --prefix .github/actions/get-release-log
+        
+      # Version Format
+      # NLP_Version = V0.1.0
+      # Extract V0.1.0, remove whitespace.
+      - name: Store current version in CURR_VER.
+        id: current_version
+        run: |
+          CURR_VER=$(awk -F "=" '/NLP_Version/ {gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}' NLP_version.ini)
+          echo "::set-output name=current_version::${CURR_VER:-0.0.0}"
+          echo ${CURR_VER}
+      - name: Compare release version and generate release log.
+        id: generate_release_log
+        uses: ./.github/actions/get-release-log
+        with:
+          api-token: ${{ secrets.GITHUB_TOKEN }}
+          current-version: ${{ steps.current_version.outputs.current_version }}
+          base-ref: "develop"
