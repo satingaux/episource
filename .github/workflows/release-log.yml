@@ -5,8 +5,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/')
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Release Changelog Builder
         uses: mikepenz/release-changelog-builder-action@v1.3.1
         env:
