@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Build Changelog
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@main
+        uses: mikepenz/release-changelog-builder-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
