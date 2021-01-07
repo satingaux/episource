@@ -10,13 +10,16 @@ jobs:
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@main
+        with:
+          ignorePreReleases: false
+          failOnError: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         uses: actions/create-release@v1
         with:
-          tag_name: 1.4
+          tag_name: 1.5
           release_name: ${{ github.ref }}
           body: ${{steps.github_release.outputs.changelog}}
         env:
