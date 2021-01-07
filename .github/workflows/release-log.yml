@@ -1,7 +1,7 @@
 name: Release log
 # Based on https://github.com/actions/starter-workflows/blob/master/ci/go.yml
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 jobs:
