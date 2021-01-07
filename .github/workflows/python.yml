@@ -1,8 +1,8 @@
 name: py
-
 on:
   push:
     branches: [ main ]
+
 
 
 jobs:
