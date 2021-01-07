@@ -2,7 +2,7 @@ name: Publish release on version change.
 # Based on https://github.com/actions/starter-workflows/blob/master/ci/go.yml
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 # If version.ini has been updated, build the project 
 # and create a new release.
