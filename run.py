@@ -2,7 +2,7 @@ print('sachin')
 
 import sys
  
-isCurrentVersionCorrect = false
+isCurrentVersionCorrect = 0
  
 def main():
  # total arguments
