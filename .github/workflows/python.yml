@@ -16,7 +16,11 @@ jobs:
          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
      - name: execute py script # run the run.py to get the latest data
+       id: isCurrentVersionCorrect
        run: |
          python run.py v1.1.1 v2.2.2
+         
+     - name: isCurrentVersionCorrect
+       run: echo ${{ steps.isCurrentVersionCorrect.isCurrentVersionCorrect }}
 #      env:
 #        key: ${{ secrets.key }} # if run.py requires passwords..etc, set it as secrets
