@@ -39,20 +39,14 @@ jobs:
         continue-on-error: true
       - name: compare current and last version
         id: compareVersions
-        if: steps.lastVersion.outputs.tag >= steps.currentVersion.outputs.content
+        if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
         run: |
-          echo "Current Version is <= last version, So no version update and no release as well, exit 1"
-          exit 1
+          echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
+          exit 0   
           
       - run: |
           echo $LAST_VERSION
           echo "current version $CURRENT_VERSION"
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.github_token }}
-          output-file: 'MY_CUSTOM_CHANGELOG.md'
         
       - name: Create Release
         id: create_release
@@ -62,6 +56,9 @@ jobs:
         with:
           tag_name: ${{ steps.currentVersion.outputs.content }}
           release_name: Release ${{ steps.currentVersion.outputs.content }}
-          body: Change logs are ${{ steps.changelog.outputs.clean_changelog }}
+          body: |
+            Changes in this Release2
+            - First Change
+            - Second Change
           draft: false
           prerelease: false
