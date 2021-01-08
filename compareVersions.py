@@ -18,8 +18,9 @@ access_token = sys.argv[3]
 print(access_token)
 g = Github(access_token)
 
-for repo in g.get_user().get_repos():
-    print(repo.name)
+print(g)
+# for repo in g.get_user().get_repos():
+#     print(repo.name)
 
 
 
