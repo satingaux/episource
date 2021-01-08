@@ -10,12 +10,12 @@ jobs:
       - name: Checkout master or main
         uses: actions/checkout@v2
 
-      - name: Current release
+      - name: Last release version
         id: lastVersion  # The step ID to refer to later.
-        uses: blacktop/get-latest-version-action@v1
+        uses: thebritican/fetch-latest-release@v1
         with:
-          repository: satingaux/episource  # The repository to scan.
-          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+          github_token: ${{ github.token }} # The repository to scan.
+#           releases-only: true  # We know that all relevant tags have a GitHub release for them.
 
       - name: Read current_version from version.ini file
         id: currentVersion
@@ -24,7 +24,7 @@ jobs:
           path: ./version.ini
         env:
           CURRENT_VERSION: ${{ steps.currentVersion.outputs.content }}
-          LAST_VERSION:  ${{ steps.lastVersion.outputs.version }}  #0.0 default if statement
+          LAST_VERSION:  ${{ steps.lastVersion.outputs.tag_name }}  #0.0 default if statement
       - run: |
           echo "last version ${{ steps.lastVersion.outputs.tag }}"
           echo "current version ${{ steps.currentVersion.outputs.content }}"
