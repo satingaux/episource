@@ -21,6 +21,6 @@ jobs:
          python run.py v1.1.1 v2.2.2
          
      - name: isCurrentVersionCorrect
-       run: echo ${{ steps.isCurrentVersionCorrect.main }}
+       run: echo 'sachin ${{ steps.isCurrentVersionCorrect }}'
 #      env:
 #        key: ${{ secrets.key }} # if run.py requires passwords..etc, set it as secrets
