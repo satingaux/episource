@@ -11,11 +11,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Current release
-        uses: codacy/git-version@2.2.0
+        id: lastVersion  # The step ID to refer to later.
+        uses: blacktop/get-latest-version-action@v1
         with:
           repository: satingaux/episource  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
-        id: lastVersion  # The step ID to refer to later.
 
       - name: Read current_version from version.ini file
         id: currentVersion
@@ -24,7 +24,7 @@ jobs:
           path: ./version.ini
         env:
           CURRENT_VERSION: ${{ steps.currentVersion.outputs.content }}
-          LAST_VERSION:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
+          LAST_VERSION:  ${{ steps.lastVersion.outputs.version }}  #0.0 default if statement
       - run: |
           echo "last version ${{ steps.lastVersion.outputs.tag }}"
           echo "current version ${{ steps.currentVersion.outputs.content }}"
@@ -33,7 +33,7 @@ jobs:
           
       - name: is last version exists
         id: isLastVersionNull
-        if: steps.lastVersion.outputs.tag == null
+        if: steps.lastVersion.outputs.version == null
         run: |
           run LAST_VERSION = 0.0
           echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0"
