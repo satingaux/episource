@@ -27,7 +27,7 @@ jobs:
       - name: Checkout HEAD.
         uses: actions/checkout@v2
 
-      - run: npm install --prefix .github/actions/get-release-log
+#       - run: npm install --prefix .github/actions/get-release-log
         
       # Version Format
       # NLP_Version = V0.1.0
@@ -35,7 +35,7 @@ jobs:
       - name: Store current version in CURR_VER.
         id: current_version
         run: |
-          CURR_VER=$(awk -F "=" '/NLP_Version/ {gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}' version.ini)
+          CURR_VER=$(awk -F "=" '/NLP_Version/ {gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}' NLP_version.ini)
           echo "::set-output name=current_version::${CURR_VER:-0.0.0}"
           echo ${CURR_VER}
       - name: Compare release version and generate release log.
