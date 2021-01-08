@@ -15,12 +15,21 @@ jobs:
        with:
          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-     - name: execute py script # run the run.py to get the latest data
-       id: isCurrentVersionCorrect
-       run: |
-         python run.py v1.1.1 v2.2.2
+#      - name: execute py script # run the run.py to get the latest data
+#        id: isCurrentVersionCorrect
+#        run: |
+#          python run.py v1.1.1 v2.2.2
          
      - name: isCurrentVersionCorrect
-       run: echo *
+       id: step1
+       run: |
+          output=$(python run.py v2.21 v2.22)
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}" 
+          echo "::set-output name=changelog::$output"
+        
+     - name: Print changelog
+       run: echo "${{ steps.step1.outputs.changelog }}"
 #      env:
 #        key: ${{ secrets.key }} # if run.py requires passwords..etc, set it as secrets
