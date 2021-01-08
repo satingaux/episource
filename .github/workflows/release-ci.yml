@@ -27,7 +27,7 @@ jobs:
       - name: Checkout HEAD.
         uses: actions/checkout@v2
 
-#       - run: npm install --prefix .github/actions/get-release-log
+      - run: npm install --prefix .github/actions/get-release-log
         
       # Version Format
       # NLP_Version = V0.1.0
