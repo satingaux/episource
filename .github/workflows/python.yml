@@ -23,7 +23,9 @@ jobs:
      - name: isCurrentVersionCorrect
        id: step1
        run: |
-          python pip install PyGithub
+          python -m pip install --upgrade pip
+          pip install PyGithub
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           echo "::set-output name=changelog::$(python compareVersions.py v2.21 v2.22)"
           
         
