@@ -16,7 +16,7 @@ else:
  
 access_token = sys.argv[3]
 
-GH = Github(access_token)
+g = Github(access_token)
 
 for repo in g.get_user().get_repos():
     print(repo.name)
