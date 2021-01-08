@@ -62,8 +62,6 @@ jobs:
         with:
           tag_name: ${{ steps.currentVersion.outputs.content }}
           release_name: Release ${{ steps.currentVersion.outputs.content }}
-          body: |
-            Changes logs in this Release are
-            - ${{ steps.changelog.outputs.clean_changelog }}
+          body: Change logs are ${{ steps.changelog.outputs.clean_changelog }}
           draft: false
           prerelease: false
