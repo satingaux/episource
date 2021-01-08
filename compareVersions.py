@@ -14,7 +14,7 @@ else:
  print('INVALID ARGS')
  
  
-access_token = sys.arv[3]
+access_token = sys.argv[3]
 
 GH = Github(access_token)
 
