@@ -14,4 +14,4 @@ print("Total arguments passed:", n)
 
 isCurrentVersionCorrect = lastVersion <= currentVersion
 
-print('isCurrentVersionCorrect: ' isCurrentVersionCorrect)
+print(isCurrentVersionCorrect)
