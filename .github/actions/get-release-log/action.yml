@@ -1,0 +1,23 @@
+name: 'Get release log'
+description: 'Generate release log from previous PRs.'
+inputs:
+  api-token:  
+    description: 'Github API Token.'
+    required: true
+    default: ''
+  current-version:
+    description: "Current version from version.ini."
+    required: false
+    default: "0.0"
+  base-ref:
+    description: "Base branch to match PR against."
+    required: false
+    default: "master"
+outputs:
+  release_log: # id of output
+    description: 'Generated release log'
+  last_version: # id of output
+    description: 'Last version of release'
+runs:
+  using: 'node12'
+  main: 'index.js'
