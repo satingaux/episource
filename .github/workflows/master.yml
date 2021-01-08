@@ -9,8 +9,10 @@ jobs:
     steps:
       - name: Checkout master or main
         uses: actions/checkout@v2
-      - name: tag number
-        run : echo ${{ github.event.release.tag_name }}
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        shell: bash
 #       - name: Current release
 #         uses: codacy/git-version@2.2.0
 #         with:
