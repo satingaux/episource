@@ -9,62 +9,58 @@ jobs:
     steps:
       - name: Checkout master or main
         uses: actions/checkout@v2
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
-      - run: echo ${{ steps.get_version.outputs.VERSION }}
-#       - name: Current release
-#         uses: codacy/git-version@2.2.0
-#         with:
-#           repository: satingaux/episource  # The repository to scan.
-#           releases-only: true  # We know that all relevant tags have a GitHub release for them.
-#         id: lastVersion  # The step ID to refer to later.
+      - name: Current release
+        uses: codacy/git-version@2.2.0
+        with:
+          repository: satingaux/episource  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+        id: lastVersion  # The step ID to refer to later.
 
-#       - name: Read current_version from version.ini file
-#         id: currentVersion
-#         uses: juliangruber/read-file-action@v1
-#         with:
-#           path: ./version.ini
-#         env:
-#           CURRENT_VERSION: ${{ steps.currentVersion.outputs.content }}
-#           LAST_VERSION:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
-#       - run: |
-#           echo "last version ${{ steps.lastVersion.outputs.tag }}"
-#           echo "current version ${{ steps.currentVersion.outputs.content }}"
-#           echo "last version $LAST_VERSION"
-#           echo "current version $CURRENT_VERSION"
+      - name: Read current_version from version.ini file
+        id: currentVersion
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./version.ini
+        env:
+          CURRENT_VERSION: ${{ steps.currentVersion.outputs.content }}
+          LAST_VERSION:  ${{ steps.lastVersion.outputs.tag }}  #0.0 default if statement
+      - run: |
+          echo "last version ${{ steps.lastVersion.outputs.tag }}"
+          echo "current version ${{ steps.currentVersion.outputs.content }}"
+          echo "last version $LAST_VERSION"
+          echo "current version $CURRENT_VERSION"
           
-#       - name: is last version exists
-#         id: isLastVersionNull
-#         if: steps.lastVersion.outputs.tag == null
-#         run: |
-#           run LAST_VERSION = 0.0
-#           echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0"
-#         continue-on-error: true
+      - name: is last version exists
+        id: isLastVersionNull
+        if: steps.lastVersion.outputs.tag == null
+        run: |
+          run LAST_VERSION = 0.0
+          echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0"
+        continue-on-error: true
 
-#       - name: compare current and last version
-#         id: compareVersions
-#         if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
-#         run: |
-#           echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
-#           exit 0   
+      - name: compare current and last version
+        id: compareVersions
+        if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
+        run: |
+          echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
+          exit 0   
           
-#       - run: |
-#           echo $LAST_VERSION
-#           echo "current version $CURRENT_VERSION"
+      - run: |
+          echo $LAST_VERSION
+          echo "current version $CURRENT_VERSION"
         
-#       - name: Create Release
-#         id: create_release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-#         with:
-#           tag_name: ${{ steps.currentVersion.outputs.content }}
-#           release_name: Release ${{ steps.currentVersion.outputs.content }}
-#           body: |
-#             Changes in this Release2
-#             - First Change
-#             - Second Change
-#           draft: false
-#           prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.currentVersion.outputs.content }}
+          release_name: Release ${{ steps.currentVersion.outputs.content }}
+          body: |
+            Changes in this Release2
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
