@@ -17,6 +17,6 @@ jobs:
          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
      - name: execute py script # run the run.py to get the latest data
        run: |
-         python run.py
+         python run.py v1.1.1 v2.2.2
 #      env:
 #        key: ${{ secrets.key }} # if run.py requires passwords..etc, set it as secrets
