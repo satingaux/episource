@@ -23,6 +23,7 @@ jobs:
      - name: isCurrentVersionCorrect
        id: step1
        run: |
+          python pip install PyGithub
           echo "::set-output name=changelog::$(python compareVersions.py v2.21 v2.22)"
           
         
