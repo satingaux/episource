@@ -39,10 +39,10 @@ jobs:
         continue-on-error: true
       - name: compare current and last version
         id: compareVersions
-        if: steps.lastVersion.outputs.tag != steps.currentVersion.outputs.content
+        if: steps.lastVersion.outputs.tag >= steps.currentVersion.outputs.content
         run: |
-          echo "Current Version is equal to last version, So no version update and no release as well, exit 1"
-          exit 0   
+          echo "Current Version <= last version, So no version update and no release as well, exit 1"
+          exit 1  
           
       - run: |
           echo $LAST_VERSION
