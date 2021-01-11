@@ -34,6 +34,13 @@ def get_inputs(input_name):
   return os.getenv(input_name.upper())
   
   
-print(get_inputs('GITHUB_TOKEN'))
+GITHUB_TOKEN = get_inputs('GITHUB_TOKEN')
+
+g = Github(GITHUB_TOKEN)
+
+# print(g)
+for repo in g.get_user().get_repos():
+    print(repo.name)
+  
 
 
