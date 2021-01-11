@@ -26,6 +26,8 @@ jobs:
        id: step1
        run: |
           output=$(python compareVersions.py v2.21 v2.22)
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
           output="${output//$'\r'/'%0D'}"
           echo "::set-output name=changelog::$output"
           
