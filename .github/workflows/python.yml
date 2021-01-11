@@ -27,9 +27,9 @@ jobs:
        run: |
           output=$(python compareVersions.py v2.21 v2.22)
           output1="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
-          echo "::set-output name=changelog::$output1"
+          output2="${output1//$'\n'/'%0A'}"
+          output3="${output2//$'\r'/'%0D'}" 
+          echo "::set-output name=changelog::$output2"
     # echo "::set-output name=changelog::$(python compareVersions.py v2.21 v2.22)"
           
         
