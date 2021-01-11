@@ -25,7 +25,7 @@
   
 
 import os
-import github
+from github import Github
 import sys
 
 print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
