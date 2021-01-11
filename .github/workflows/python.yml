@@ -34,5 +34,4 @@ jobs:
         
      - name: Print changelog
        run: echo "${{ steps.step1.outputs.changelog }}"
-       env:
-        key: ${{ secrets.GITHUB_TOKEN }} # if run.py requires passwords..etc, set it as secrets
+
