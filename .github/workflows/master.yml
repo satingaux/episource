@@ -43,17 +43,17 @@ jobs:
         continue-on-error: true
       
       - name: isCurrentVersionCorrect
-        id: step1
+        id: isCurrentVersionCorrectId
         run: |
-          output=$(python compareVersions.py ${{ steps.lastVersion.outputs.tag }} ${{ steps.currentVersion.outputs.content }})
+          output=$(python compareVersions.py v2.2.1 v2.2.2)
           echo "::set-output name=changelog::$output"
           
-      - name: Print changelog
-        run: echo ${{ steps.step1.outputs.changelog }}
+      - name: Print changelog of isCurrentVersionCorrectId
+        run: echo ${{ steps.isCurrentVersionCorrectId.outputs.changelog }}
       
       - name: compare current and last version
         id: compareVersions
-        if: ${{ steps.step1.outputs.changelog }}
+        if: ${{ steps.isCurrentVersionCorrectId.outputs.changelog }}
         run: |
           echo "Current Version <= last version, So no version update and no release as well, exit 1"
           exit 1  
