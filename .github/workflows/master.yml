@@ -45,7 +45,7 @@ jobs:
       - name: isCurrentVersionCorrect
         id: isCurrentVersionCorrectId
         run: |
-          output=$(python compareVersions.py ${{ steps.currentVersion.outputs.content }} ${{ steps.lastVersion.outputs.tag }})
+          output=$(python compareVersions.py ${{ steps.lastVersion.outputs.tag }} ${{ steps.currentVersion.outputs.content }} )
           echo "::set-output name=changelog::$output"
           
       - name: Print changelog of isCurrentVersionCorrectId
