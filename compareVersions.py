@@ -1,5 +1,5 @@
-import sys
-from collections import defaultdict
+# import sys
+# from collections import defaultdict
 # from github import Github
 
 # argumnts
@@ -7,14 +7,14 @@ from collections import defaultdict
 # 2. Current Version
 
 # print(sys.argv)
-n = len(sys.argv)
+# n = len(sys.argv)
 
-if n == 3:
- lastVersion = sys.argv[1]
- currentVersion = sys.argv[2]
- print(lastVersion >= currentVersion)
-else:
- print('INVALID ARGUMENTS')
+# if n == 3:
+#  lastVersion = sys.argv[1]
+#  currentVersion = sys.argv[2]
+#  print(lastVersion >= currentVersion)
+# else:
+#  print('INVALID ARGUMENTS')
  
 
 # g = Github(sys.argv[3])
@@ -24,6 +24,16 @@ else:
 #     print(repo.name)
   
 
+import os
+import github
+import sys
 
+print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+def get_inputs(input_name):
+  return os.getenv(input_name.upper())
+  
+  
+print(get_inputs('GITHUB_TOKEN'))
 
 
