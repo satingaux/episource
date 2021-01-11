@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
-        id: lastVersion
         uses: actions/checkout@v2
       - name: setup python
         uses: actions/setup-python@v2
@@ -16,6 +15,7 @@ jobs:
          python-version: '3.x'
          architecture: 'x64'
       - name: GET Last Version
+        id: lastVersion
         uses: oprypin/find-latest-tag@v1
         with:
           repository: ${{ github.repository }}
