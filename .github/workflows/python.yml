@@ -25,9 +25,8 @@ jobs:
      - name: isCurrentVersionCorrect
        id: step1
        run: |
-          output=$(python compareVersions.py v2.21 v2.22)
+          output = $(python compareVersions.py v2.21 v2.22)
           echo "::set-output name=changelog::$output"
-    # echo "::set-output name=changelog::$(python compareVersions.py v2.21 v2.22)"
           
         
      - name: Print changelog
