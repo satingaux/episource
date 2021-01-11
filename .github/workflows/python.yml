@@ -21,6 +21,8 @@ jobs:
          python -m pip install --upgrade pip
          pip install PyGithub
          python compareVersions.py v2.21 v2.22
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
 #      - name: isCurrentVersionCorrect
 #        id: step1
