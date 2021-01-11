@@ -8,14 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
+        id: lastVersion
         uses: actions/checkout@v2
-      
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+         python-version: '3.x'
+         architecture: 'x64'
       - name: GET Last Version
         uses: oprypin/find-latest-tag@v1
         with:
           repository: ${{ github.repository }}
           releases-only: true 
-        id: lastVersion  # The step ID to refer to later.
       - name: Read current_version from version.ini file
         id: currentVersion
         uses: juliangruber/read-file-action@v1
@@ -30,16 +34,26 @@ jobs:
           echo "last version $LAST_VERSION"
           echo "current version $CURRENT_VERSION"
           
-      - name: is last version exists
+      - name: Is last version exists
         id: isLastVersionNull
         if: steps.lastVersion.outputs.tag == null
         run: |
           run LAST_VERSION = 0.0.0
           echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0.0"
         continue-on-error: true
+      
+      - name: isCurrentVersionCorrect
+        id: step1
+        run: |
+          output=$(python compareVersions.py ${{ steps.lastVersion.outputs.tag }} ${{ steps.currentVersion.outputs.content }})
+          echo "::set-output name=changelog::$output"
+          
+      - name: Print changelog
+        run: echo ${{ steps.step1.outputs.changelog }}
+      
       - name: compare current and last version
         id: compareVersions
-        if: steps.lastVersion.outputs.tag >= steps.currentVersion.outputs.content
+        if: ${{ steps.step1.outputs.changelog }}
         run: |
           echo "Current Version <= last version, So no version update and no release as well, exit 1"
           exit 1  
