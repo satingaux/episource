@@ -6,7 +6,7 @@ from collections import defaultdict
 # 1. LastVersion
 # 2. Current Version
 
-print(sys.argv)
+# print(sys.argv)
 n = len(sys.argv)
 
 if n == 3:
