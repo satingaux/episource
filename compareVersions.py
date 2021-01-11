@@ -20,11 +20,11 @@ g1 = Github("9beedbcec452953a25d2ca629bcce3c0f9512fee")
 for repo in g1.get_user().get_repos():
     print(repo.name)
 
-g = Github(sys.argv[3])
+# g = Github(sys.argv[3])
 
-print(g)
-for repo in g.get_user().get_repos():
-    print(repo.name)
+# print(g)
+# for repo in g.get_user().get_repos():
+#     print(repo.name)
   
 
 
