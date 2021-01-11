@@ -1,6 +1,6 @@
 name: py
 on:
-  pull_request:
+  push:
     branches: [main]
 
 jobs:
@@ -15,19 +15,19 @@ jobs:
        with:
          python-version: '3.x'
          architecture: 'x64'
-#      - name: execute py script # run the run.py to get the latest data
-#        id: isCurrentVersionCorrect
-#        run: |
-#          python -m pip install --upgrade pip
-#          pip install PyGithub
-#          python compareVersions.py v2.21 v2.22 ${{ secrets.GITHUB_TOKEN }}
-         
-     - name: isCurrentVersionCorrect
-       id: step1
+     - name: execute py script # run the run.py to get the latest data
+       id: isCurrentVersionCorrect
        run: |
-          output=$(python compareVersions.py v2.21 v2.22)
-          echo "::set-output name=changelog::$output"
+         python -m pip install --upgrade pip
+         pip install PyGithub
+         python compareVersions.py v2.21 v2.22
+         
+#      - name: isCurrentVersionCorrect
+#        id: step1
+#        run: |
+#           output=$(python compareVersions.py v2.21 v2.22)
+#           echo "::set-output name=changelog::$output"
           
-     - name: Print changelog
-       run: echo "${{ steps.step1.outputs.changelog }}"
+#      - name: Print changelog
+#        run: echo "${{ steps.step1.outputs.changelog }}"
 
