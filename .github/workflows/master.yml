@@ -53,7 +53,7 @@ jobs:
       
       - name: compare current and last version
         id: compareVersions
-        if: ${{ steps.isCurrentVersionCorrectId.outputs.changelog }} == True
+        if: ${{ steps.isCurrentVersionCorrectId.outputs.changelog }} == False
         run: |
           echo "Current Version <= last version, So no version update and no release as well, exit 1"
           exit 1  
