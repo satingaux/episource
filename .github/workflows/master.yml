@@ -56,7 +56,6 @@ jobs:
         if: ${{ steps.isCurrentVersionCorrectId.outputs.changelog }} == False
         run: |
           echo "Current Version <= last version, So no version update and no release as well, exit 1"
-          exit 1  
           
       - run: |
           echo $LAST_VERSION
