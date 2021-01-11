@@ -1,20 +1,20 @@
 name: Create Release
 on:
-  pull_request:
+  push:
     branches: [ main ]
 jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master or main
-        uses: actions/checkout@v2 # actions/checkout@main
+      - name: Checkout branch
+        uses: actions/checkout@v2
       
       - name: GET Last Version
         uses: oprypin/find-latest-tag@v1
         with:
-          repository: satingaux/episource  # The repository to scan.
-          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+          repository: ${{ github.repository }}
+          releases-only: true 
         id: lastVersion  # The step ID to refer to later.
       - name: Read current_version from version.ini file
         id: currentVersion
@@ -34,8 +34,8 @@ jobs:
         id: isLastVersionNull
         if: steps.lastVersion.outputs.tag == null
         run: |
-          run LAST_VERSION = 0.0
-          echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0"
+          run LAST_VERSION = 0.0.0
+          echo "Last version does not exists so, DEFAULT LAST_VERSION = 0.0.0"
         continue-on-error: true
       - name: compare current and last version
         id: compareVersions
